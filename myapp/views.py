@@ -7,8 +7,8 @@ def index(request):
     return HttpResponse(f'{note.title} {note.text} ' for note in Note.objects.all())
 
 def women(request):
-    return HttpResponse(f"{women.title} {women.content},Опубликовано:{women.time_create}"
-                        f",Изменено:{women.time_update} Работает:{women.is_published}   "
+    return HttpResponse(f"{women.title} {women.content},Опубликовано: {women.time_create}"
+                        f",Изменено:{women.time_update} Работает: {women.is_published}   "
                         for women in Women.objects.all())
 
 def test(request):
