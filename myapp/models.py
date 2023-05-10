@@ -7,6 +7,10 @@ class Note(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField(max_length=1337)
 
+class UserData(models.Model):
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+
 
 class Women(models.Model):
     title = models.CharField(max_length=200)
