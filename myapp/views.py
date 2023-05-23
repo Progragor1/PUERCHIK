@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics
 from .serializers import *
 from .models import *
+from myproject.backend.models import Core
 
 
 class NoteView(APIView):
@@ -81,7 +82,8 @@ class UserDetail(generics.ListAPIView):
 def index(request):
     user = User.objects.filter(id=request.user.id)
     if len(user) != 0:
-        return render(request, 'index.html')
+        core = Core.objects.get(user=request.user)
+        return render(request, 'frontend.templates.index.html', {'core': core})
     else:
         return redirect('login')
 
@@ -95,9 +97,9 @@ def user_login(request):
             login(request, user)
             return redirect('index')
         else:
-            return render(request, 'login.html', {'invalid': True})
+            return render(request, 'frontend.templates.login.html', {'invalid': True})
     else:
-        return render(request, 'login.html', {'invalid': False})
+        return render(request, 'frontend.templates.login.html', {'invalid': False})
 
 
 def user_logout(request):
@@ -116,6 +118,8 @@ def user_registration(request):
                 user = User.objects.create_user(username, '', password)
                 user.save()
                 login(request, user)
+                core = Core(user=user)
+                core.save()
                 return redirect('index')
             else:
                 return render(request, 'registration.html', {'invalid': True, 'form': form})
