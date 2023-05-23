@@ -1,10 +1,71 @@
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .forms import *
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import UserData
 from rest_framework import generics
 from .serializers import *
+from .models import *
+
+
+class NoteView(APIView):
+    def get(self, request):
+        id = request.query_params.get("id")
+        if id:
+            note = Note.objects.get(pk=id)
+            return Response({
+                "id": note.id,
+                "title": note.title,
+                "text": note.text
+            })
+        notes = Note.objects.all()
+
+        return Response(notes.values())
+
+    def post(self, request):
+        title = request.data.get("title")
+        text = request.data.get("text")
+        note = Note.objects.create(title=title, text=text)
+
+        return Response({
+            "id": note.id,
+            "title": note.title,
+            "text": note.text
+        })
+
+    def put(self, request):
+        id = request.data.get("id")
+        if not id:
+            return Response({"error": 'Нет id'})
+
+        note = Note.objects.get(pk=id)
+        if not note:
+            return Response({"error": "Нет такой заметки"})
+        title = request.data.get('title')
+        text = request.data.get('text')
+        note.update(title=title, text=text)
+
+        updated_note = Note.objects.get(pk=id)
+        return Response({
+            "id": note.id,
+            "title": note.title,
+            "text": note.text
+        })
+
+    def delete(self, request):
+        id = request.query_params.get('id')
+        if not id:
+            return Response({"error": "Нет id"})
+        note = Note.objects.get(pk=id)
+        if not note:
+            return Response({"error": "Нет такой заметки"})
+        note.delete()
+
+        return Response({
+            "success": "Заметка успешно удалена"
+        })
 
 
 class UserList(generics.ListAPIView):
@@ -16,12 +77,14 @@ class UserDetail(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializerDetail
 
+
 def index(request):
     user = User.objects.filter(id=request.user.id)
     if len(user) != 0:
-        return render(request,'index.html')
+        return render(request, 'index.html')
     else:
         return redirect('login')
+
 
 def user_login(request):
     if request.method == "POST":
@@ -32,9 +95,10 @@ def user_login(request):
             login(request, user)
             return redirect('index')
         else:
-            return render(request,'login.html',{'invalid': True})
+            return render(request, 'login.html', {'invalid': True})
     else:
-        return render(request,'login.html', {'invalid': False})
+        return render(request, 'login.html', {'invalid': False})
+
 
 def user_logout(request):
     logout(request)
