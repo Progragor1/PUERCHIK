@@ -50,9 +50,9 @@ class NoteView(APIView):
 
         updated_note = Note.objects.get(pk=id)
         return Response({
-            "id": note.id,
-            "title": note.title,
-            "text": note.text
+            "id": updated_note.id,
+            "title": updated_note.title,
+            "text": updated_note.text
         })
 
     def delete(self, request):

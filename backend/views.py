@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import Core
 from .serializers import CoreSerializers
 
+
 # Create your views here.
 
 @api_view(['GET'])
