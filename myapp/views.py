@@ -9,6 +9,7 @@ from rest_framework import generics
 from .serializers import *
 from .models import *
 from django.apps import apps
+from django.shortcuts import get_object_or_404
 
 
 class NoteView(APIView):
@@ -80,13 +81,15 @@ class UserDetail(generics.ListAPIView):
 
 
 def index(request):
-    user = User.objects.filter(id=request.user.id)
-    if len(user) != 0:
-        coreModel = apps.get_model('backend', 'Core')
-        core = coreModel.objects.get(user=request.user)
-        return render(request, 'index.html', {'core': core})
-    else:
-        return redirect('login')
+    coreModel = apps.get_model('backend', 'Core')
+    boostsModel = apps.get_model('backend', 'Boost')
+    core = get_object_or_404(coreModel, user=request.user)
+    boosts = boostsModel.objects.filter(core=core)
+
+    return render(request, 'index.html',
+                  {'core': core,
+                   'boosts': boosts,
+                   })
 
 
 def user_login(request):
