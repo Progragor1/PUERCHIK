@@ -1,3 +1,7 @@
+body{
+    background-color: blueviolet;
+}
+
 header{
     background-color: darkcyan;
     color: white;
@@ -30,3 +34,4 @@ main{
     color: white;
     text-decoration: none;
 }
+

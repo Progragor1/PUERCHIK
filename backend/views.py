@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,7 +30,7 @@ def buy_boost(request, id):
         core.click_power += boost.power
         core.coins -= boost.price
         core.save()
-        return Response({'coins': core.coins})
+        return Response({'coins': core.coins}),
     return Response("Not enough money", status=400)
 
 
