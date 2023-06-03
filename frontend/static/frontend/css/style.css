@@ -2,6 +2,10 @@ body{
     background-color: blueviolet;
 }
 
+.app .nav a{
+    text-decoration: none;
+}
+
 header{
     background-color: darkcyan;
     color: white;
@@ -34,4 +38,3 @@ main{
     color: white;
     text-decoration: none;
 }
-
