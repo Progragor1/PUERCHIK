@@ -1,41 +1,41 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="utf-8">
-    <title>Title </title>
+    <title>Авторизация</title>
+      <link rel="shortcut icon" type="image/x-icon" href="https://i.pinimg.com/originals/b4/ed/15/b4ed15d1dfac88229bdd47e404041756.png"/>
   </head>
   <body>
     <div class="header">
-      <h3 class="site-name">LOGIN</h3>
+      <h3 class="site-name">ВХОД</h3>
        
       </div>
     <main>
-    <div align="center">
+    <div class="form" align="center">
       <form method="post" action="{% url 'login' %}" >
         {% csrf_token %}
         
         <div class="form-group">
-            <label for="username"> Username: </label>
+            <label for="username"> Имя пользователя: </label>
             <br>
-            <input type="text" name="username" id="username" placeholder="Username">
+            <input type="text" name="username" id="username" placeholder="Имя">
         </div>
         <div class="form-group">
-            <label for="password"> Password: </label>
+            <label for="password"> Пароль: </label>
             <br>
-            <input type="text" name="password" id="password" placeholder="Password">
+            <input type="text" name="password" id="password" placeholder="Пароль">
         </div>
         <div class="form-group">
-          <input type="submit" value="Login">
+          <input class="ok" type="submit" value="Войти">
         </div>
        {% if invalid%}
-       <p> Incorrect login or password. </p>
+       <p class="error"> Неверное имя пользователя или пароль </p>
        {% endif %}
       </form>
       
     </div>
-    <div align="center">Or you can <a href="/app/registration">sign up</a></div>
+    <div class="sign_up" align="center">Нет аккаунта? <a href="/app/registration">Зарегестрироваться!</a></div>
     </main>
   </body>
 </html>

@@ -1,15 +1,16 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="ru">
   <head>
-      <title>Лучший кликер на планете</title>
-      <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+      <title>Морковочный кликер</title>
+      <link rel="shortcut icon" type="image/x-icon" href="https://i.pinimg.com/originals/b4/ed/15/b4ed15d1dfac88229bdd47e404041756.png"/>
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
       <script type="text/javascript" src="{% static 'frontend/js/index.js' %}"></script>
   </head>
   <body>
     <main class="app">
         <nav class="nav">
             Привет, {{user.username}}
+             <div id="core_level">Уровень: <span class="value">{{ core.level }}</span></div>
             <a href="{% url 'logout' %}">Выйти</a>
         </nav>
 
@@ -17,12 +18,12 @@
             <div id='coins'>{{core.coins}}</div>
 
             <p>
-                Невероятная мощь клика: <span id="click_power">{{ core.click_power }}</span>
+                Сила посева урожая: <span id="click_power">{{ core.click_power }}</span>
             </p>
         </div>
-        <div id="gamearea">
+        <div>
             <button id="morkovka" onclick="call_click()">
-                    <img src="../static/frontend/photos/morkov.png" alt="morkovka">
+                <img src="../static/frontend/photos/morkov.png" alt="morkovka">
             </button>
         </div>
         <aside class="boosts" id="boosts">

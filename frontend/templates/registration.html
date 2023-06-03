@@ -1,29 +1,29 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="utf-8">
-    <title>Title </title>
+    <title>Регистрация </title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://i.pinimg.com/originals/b4/ed/15/b4ed15d1dfac88229bdd47e404041756.png"/>
   </head>
   <body>
     <div class="header">
-      <h3 class="site-name">REGISTRATION</h3>
+      <h3 class="site-name">РЕГИСТРАЦИЯ</h3>
        
       </div>
     <main>
-    <div align="center">
+    <div class="registation" align="center">
       <form method="post" action="{% url 'registration' %}">
         {%csrf_token%}
         {{form.as_p}}
-        <input type="submit" value="SIGN UP">
+        <input type="submit" value="Зарегестрироваться">
         </form>
         {% if invalid%}
-       <p>This username is already taken! Please choose another oneq12e312312!</p>
+       <p class="error">Имя пользователя занято! Выберите другое имя, пожалуйста!</p>
        {% endif %}
     </div>
     <br>
-    <div align="center">Or you can <a href="/app/login">sign in</a></div>
+    <div class="sign_in" align="center">Есть аккаунт?<a href="/app/login">Войти!</a></div>
   </main>
   </body>
 </html>
